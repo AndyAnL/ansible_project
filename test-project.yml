@@ -1,0 +1,24 @@
+---
+- name: Test docker_service
+  hosts: app
+  tags: app
+  tasks:
+    - name: docker_service
+      register: docker_service_info
+      ansible.builtin.systemd:
+        name: docker
+    - name: Check Docker is working
+      ansible.builtin.assert:
+        that:
+          - docker_service_info.status.ActiveState == 'active'
+- name: Test database hosts
+  hosts: database
+  tasks:
+    - name: postgres_service status
+      register: postgres_service_info
+      ansible.builtin.systemd:
+        name: postgresql
+    - name: Check Postgres
+      ansible.builtin.assert:
+        that:
+          - postgres_service_info.status.ActiveState == 'active'

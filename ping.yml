@@ -1,0 +1,10 @@
+---
+# проверка доступности хостов
+
+- name: Test host app
+  hosts: all
+  # become: true
+  tasks:
+   - name: Test host database
+     ansible.builtin.ping:
+      
